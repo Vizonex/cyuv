@@ -1,8 +1,9 @@
-from setuptools import Extension, setup
-from setuptools.command.build_ext import build_ext
 import os
-
 from importlib.util import find_spec
+
+from setuptools import setup
+from setuptools.command.build_ext import build_ext
+
 
 def package_exists(module: str) -> None:
     """Checks to see if a package exists without needing to import or execute it's code.
@@ -18,7 +19,7 @@ def package_exists(module: str) -> None:
 # external libraries. (Maybe we can add nmake also Not sure...)
 
 
-class my_build_ext(build_ext):
+class cyuv_build_ext(build_ext):
     # Brought over from winloop since these can be very useful.
     user_options = build_ext.user_options + [
         ("cython-always", None, "run cythonize() even if .c files are present"),
@@ -91,11 +92,11 @@ class my_build_ext(build_ext):
 
 if __name__ == "__main__":
     setup(
-        ext_modules=[
-            Extension(
-                "cython_template_uv._mod",
-                ["src/cython_template_uv/_mod.pyx"]
-            )
-        ],
-        cmdclass={"build_ext": my_build_ext},
+        # ext_modules=[
+        #     Extension(
+        #         "cyuv._mod",
+        #         ["src/cyuv/_mod.pyx"]
+        #     )
+        # ],
+        cmdclass={"build_ext": cyuv_build_ext},
     )
